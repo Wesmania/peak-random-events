@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.002.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{2DD656B2-F822-4110-885A-376DE862A19F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RandomEvents", "src\RandomEvents\RandomEvents.csproj", "{0107B68C-3F2C-4A6F-8EF7-9E04291AE4DE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0107B68C-3F2C-4A6F-8EF7-9E04291AE4DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0107B68C-3F2C-4A6F-8EF7-9E04291AE4DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0107B68C-3F2C-4A6F-8EF7-9E04291AE4DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0107B68C-3F2C-4A6F-8EF7-9E04291AE4DE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0107B68C-3F2C-4A6F-8EF7-9E04291AE4DE} = {2DD656B2-F822-4110-885A-376DE862A19F}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {92F6D475-68F0-44D6-A1AF-A28F5948E381}
+	EndGlobalSection
+EndGlobal
