@@ -21,7 +21,7 @@ public interface IEvent
     public static Dictionary<AllEvents, IEventFactory> all_events = new()
     {
         { AllEvents.TEST_EVENT_1, TestEvent1.factory() },
-        { AllEvents.TEST_EVENT_2, TestEvent2.factory() }
+        { AllEvents.GREAT_MAGICIAN, GreatMagicianEvent.factory() },
     };
 }
 
@@ -77,7 +77,7 @@ public class TestEvent2 : IEvent
 
 public enum AllEvents {
     TEST_EVENT_1,
-    TEST_EVENT_2,
+    GREAT_MAGICIAN,
 };
 
 public struct EnableMessage

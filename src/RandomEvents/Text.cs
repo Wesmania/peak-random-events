@@ -5,11 +5,15 @@ using System.Linq;
 using HarmonyLib;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 
 namespace RandomEvents;
 
+public class NiceText
+{
+    public String s = "";
+    public Color c;
+}
 public class DoText : MonoBehaviour
 {
     private Transform? transform_;
@@ -45,7 +49,7 @@ public class DoText : MonoBehaviour
         catch { }
     }
 
-    public void PlaceText(List<String> lines)
+    public void PlaceText(List<NiceText> lines)
     {
         foreach (var t in at)
         {
@@ -57,7 +61,8 @@ public class DoText : MonoBehaviour
             textChatObj.transform.SetParent(c!.transform, false);
             var t = textChatObj.AddComponent<TextMeshProUGUI>();
 
-            t.text = l;
+            t.text = l.s;
+            t.color = l.c;
             if (f != null)
             {
                 t.font = f;
@@ -125,10 +130,10 @@ public class TextSetter : MonoBehaviour
     {
         t = _t;
     }
-    public void ShowCard(List<String> end, float delay_end, List<String> start, float delay_start)
+    public void ShowCard(List<NiceText> end, float delay_end, List<NiceText> start, float delay_start)
     {
-        var _start = new List<String>(start);
-        var _end = new List<String>(end);
+        var _start = new List<NiceText>(start);
+        var _end = new List<NiceText>(end);
         StartCoroutine(DoShow());
         IEnumerator DoShow()
         {
