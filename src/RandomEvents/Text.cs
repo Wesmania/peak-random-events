@@ -63,7 +63,7 @@ public class DoText : MonoBehaviour
                 t.font = f;
             }
             t.alignment = TextAlignmentOptions.Top;
-            t.fontSize = 24;
+            t.fontSize = 32;
 
             var ct = textChatObj.GetComponent<RectTransform>();
             ct.anchorMin = new Vector2(0.2f, 0.8f);
@@ -112,23 +112,34 @@ public static class SoulmateTextPatch
         t = __instance.gameObject.AddComponent<DoText>();
         t.Init(f, __instance.transform);
 
-        t.PlaceText(["One", "Two", "Three"]);
         setter = __instance.gameObject.AddComponent<TextSetter>();
-        setter.Blink(t);
+        setter.Init(t);
     }
 }
 public class TextSetter : MonoBehaviour
 {
-    public void Blink(DoText t)
+
+    DoText? t;
+
+    public void Init(DoText _t)
     {
-        StartCoroutine(DoBlink());
-        IEnumerator DoBlink()
+        t = _t;
+    }
+    public void ShowCard(List<String> end, float delay_end, List<String> start, float delay_start)
+    {
+        var _start = new List<String>(start);
+        var _end = new List<String>(end);
+        StartCoroutine(DoShow());
+        IEnumerator DoShow()
         {
             while(true) {
+                t!.PlaceText(_end);
+                yield return new WaitForSeconds(delay_end);
+                t!.Hide();
                 yield return new WaitForSeconds(1f);
-                t?.Show();
-                yield return new WaitForSeconds(1f);
-                t?.Hide();
+                t!.PlaceText(_start);
+                yield return new WaitForSeconds(delay_start);
+                t!.Hide();
             }
         }
     }
