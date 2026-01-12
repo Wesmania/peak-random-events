@@ -13,80 +13,79 @@ namespace RandomEvents;
 public class DoText : MonoBehaviour
 {
     private Transform? transform_;
-    private Canvas? SoulmatePrompt;
-    private TextMeshProUGUI? text;
-    private TMP_FontAsset? darumaDropOneFont;
-    private GameObject[] activeText = [];
+    private Canvas? c;
+    private TMP_FontAsset? f;
+    private GameObject[] at = [];
 
     public void Init(TMP_FontAsset? ft, Transform _pt)
     {
-        darumaDropOneFont = ft;
+        f = ft;
         transform_ = _pt;
     }
 
     public void Awake()
     {
-        var textChatCanvasObj = new GameObject("SoulmatePrompt");
-        textChatCanvasObj.transform.SetParent(transform_, false);
-        SoulmatePrompt = textChatCanvasObj.AddComponent<Canvas>();
-        SoulmatePrompt.renderMode = RenderMode.ScreenSpaceCamera;
+        var co = new GameObject("SoulmatePrompt");
+        co.transform.SetParent(transform_, false);
+        c = co.AddComponent<Canvas>();
+        c.renderMode = RenderMode.ScreenSpaceCamera;
 
-        CanvasScaler canvasScaler = SoulmatePrompt.GetComponent<CanvasScaler>() ?? SoulmatePrompt.gameObject.AddComponent<CanvasScaler>(); ;
-        canvasScaler.referencePixelsPerUnit = 100;
-        canvasScaler.matchWidthOrHeight = 1;
-        canvasScaler.referenceResolution = new Vector2(1920, 1080);
-        canvasScaler.scaleFactor = 1;
-        canvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
-        canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+        CanvasScaler cs = c.GetComponent<CanvasScaler>() ?? c.gameObject.AddComponent<CanvasScaler>(); ;
+        cs.referencePixelsPerUnit = 100;
+        cs.matchWidthOrHeight = 1;
+        cs.referenceResolution = new Vector2(1920, 1080);
+        cs.scaleFactor = 1;
+        cs.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
+        cs.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
 
         try
         {
-            darumaDropOneFont = GUIManager.instance?.itemPromptDrop?.font;
+            f = GUIManager.instance?.itemPromptDrop?.font;
         }
         catch { }
     }
 
     public void PlaceText(List<String> lines)
     {
-        foreach (var t in activeText)
+        foreach (var t in at)
         {
             Destroy(t);
         }
         var objs = lines.Select((l, i) =>
         {
             var textChatObj = new GameObject("TextChat");
-            textChatObj.transform.SetParent(SoulmatePrompt!.transform, false);
-            text = textChatObj.AddComponent<TextMeshProUGUI>();
+            textChatObj.transform.SetParent(c!.transform, false);
+            var t = textChatObj.AddComponent<TextMeshProUGUI>();
 
-            text.text = l;
-            if (darumaDropOneFont != null)
+            t.text = l;
+            if (f != null)
             {
-                text.font = darumaDropOneFont;
+                t.font = f;
             }
-            text.alignment = TextAlignmentOptions.Top;
-            text.fontSize = 24;
+            t.alignment = TextAlignmentOptions.Top;
+            t.fontSize = 24;
 
             var ct = textChatObj.GetComponent<RectTransform>();
             ct.anchorMin = new Vector2(0.2f, 0.8f);
             ct.anchorMax = new Vector2(0.8f, 0.8f);
-            var down = text.fontSize * i * 1.5f;
-            ct.offsetMin = new Vector2(0, text.fontSize * 1.5f);
+            var down = t.fontSize * i * 1.5f;
+            ct.offsetMin = new Vector2(0, t.fontSize * 1.5f);
             ct.offsetMax = new Vector2(0, -down);
             return textChatObj;
         });
-        activeText = [.. objs];
+        at = [.. objs];
     }
 
     public void Show()
     {
-        foreach (var t in activeText)
+        foreach (var t in at)
         {
             t.SetActive(true);
         }
     }
     public void Hide()
     {
-        foreach (var t in activeText)
+        foreach (var t in at)
         {
             t.SetActive(false);
         }
@@ -97,8 +96,6 @@ public class DoText : MonoBehaviour
 public static class SoulmateTextPatch
 {
     public static DoText? t;
-    public static TextMeshProUGUI? text;
-    public static TMP_FontAsset? darumaDropOneFont;
     public static TextSetter? setter;
 
     [HarmonyPostfix]
@@ -106,13 +103,14 @@ public static class SoulmateTextPatch
     public static void StartPostfix(GUIManager __instance)
     {
         if (t != null) return;
+        TMP_FontAsset? f = null;
         try
         {
-            darumaDropOneFont = GUIManager.instance?.itemPromptDrop?.font;
+            f = GUIManager.instance?.itemPromptDrop?.font;
         }
         catch { }
         t = __instance.gameObject.AddComponent<DoText>();
-        t.Init(darumaDropOneFont, __instance.transform);
+        t.Init(f, __instance.transform);
 
         t.PlaceText(["One", "Two", "Three"]);
         setter = __instance.gameObject.AddComponent<TextSetter>();
