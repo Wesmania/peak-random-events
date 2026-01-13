@@ -17,6 +17,7 @@ public enum AllEvents
 {
     GREAT_MAGICIAN = 1,
     EMISSIONS = 2,
+    CURSE_DAMAGE = 2,
 };
 public interface IEvent
 {
@@ -28,6 +29,7 @@ public interface IEvent
     {
         { AllEvents.GREAT_MAGICIAN, GreatMagicianEvent.factory() },
         { AllEvents.EMISSIONS, HeatEmissionEvent.factory() },
+        { AllEvents.CURSE_DAMAGE, CurseDamageEvent.factory() },
     };
 }
 
