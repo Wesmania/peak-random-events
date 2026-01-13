@@ -12,6 +12,12 @@ public struct IEventFactory
     public Func<IEvent> New;
     public Func<JObject, IEvent> FromJson;
 }
+
+public enum AllEvents
+{
+    GREAT_MAGICIAN = 1,
+    EMISSIONS = 2,
+};
 public interface IEvent
 {
     public JObject to_json();
@@ -20,8 +26,8 @@ public interface IEvent
 
     public static Dictionary<AllEvents, IEventFactory> all_events = new()
     {
-        { AllEvents.TEST_EVENT_1, TestEvent1.factory() },
         { AllEvents.GREAT_MAGICIAN, GreatMagicianEvent.factory() },
+        { AllEvents.EMISSIONS, HeatEmissionEvent.factory() },
     };
 }
 
@@ -74,11 +80,6 @@ public class TestEvent2 : IEvent
         return [];
     }
 }
-
-public enum AllEvents {
-    TEST_EVENT_1,
-    GREAT_MAGICIAN,
-};
 
 public struct EnableMessage
 {
