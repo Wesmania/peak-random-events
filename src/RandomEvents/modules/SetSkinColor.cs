@@ -52,7 +52,15 @@ public class GreatMagicianEvent : IEvent
     }
     GreatMagicianEvent()
     {
-        sc = (SkinColor)(rng.Next() % 10);
+        var random = rng.Next() % 4 > 0;
+        if (random)
+        {
+            sc = SkinColor.RANDOM;
+        }
+        else
+        {
+            sc = (SkinColor)(rng.Next() % 9);
+        }
         SetGo();
     }
     private static String ScStr(SkinColor sc)
