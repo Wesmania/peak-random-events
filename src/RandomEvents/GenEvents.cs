@@ -19,6 +19,7 @@ public enum AllEvents
     EMISSIONS = 2,
     CURSE_DAMAGE = 3,
     FREE_BALLOON = 4,
+    NO_SCUTTLING = 5,
 };
 public interface IEvent
 {
@@ -32,6 +33,7 @@ public interface IEvent
         { AllEvents.EMISSIONS, HeatEmissionEvent.factory() },
         { AllEvents.CURSE_DAMAGE, CurseDamageEvent.factory() },
         { AllEvents.FREE_BALLOON, FreeBalloonEvent.factory() },
+        { AllEvents.NO_SCUTTLING, NoScuttlingEvent.factory() },
     };
 }
 public struct EnableMessage

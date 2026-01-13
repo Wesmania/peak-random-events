@@ -14,7 +14,7 @@ public class TiedBalloonPatch
     private static System.Random rng = new();
 
     [HarmonyPrefix]
-    [HarmonyPatch("Pop", typeof(TiedBalloon))]
+    [HarmonyPatch("Pop")]
     private static bool PopPrefix(TiedBalloon __instance)
     {
         if (__instance == my_balloon)

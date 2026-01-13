@@ -135,8 +135,6 @@ public class GreatMagicianEvent : IEvent
             }
         };
     }
-
-
     public JObject to_json()
     {
         JObject o = [];
