@@ -17,7 +17,8 @@ public enum AllEvents
 {
     GREAT_MAGICIAN = 1,
     EMISSIONS = 2,
-    CURSE_DAMAGE = 2,
+    CURSE_DAMAGE = 3,
+    FREE_BALLOON = 4,
 };
 public interface IEvent
 {
@@ -30,59 +31,9 @@ public interface IEvent
         { AllEvents.GREAT_MAGICIAN, GreatMagicianEvent.factory() },
         { AllEvents.EMISSIONS, HeatEmissionEvent.factory() },
         { AllEvents.CURSE_DAMAGE, CurseDamageEvent.factory() },
+        { AllEvents.FREE_BALLOON, FreeBalloonEvent.factory() },
     };
 }
-
-public class TestEvent1 : IEvent
-{
-    public void Disable(EventInterface eintf)
-    {
-    }
-
-    public void Enable(EventInterface eintf)
-    {
-        eintf.AddEnableLine("Frobnicators are frobnicatier.");
-    }
-    public static IEventFactory factory() {
-        return new IEventFactory
-        {
-            New = () => new TestEvent1(),
-            FromJson = _ => new TestEvent1()
-        };
-    }
-
-
-    public JObject to_json()
-    {
-        return [];
-    }
-}
-
-public class TestEvent2 : IEvent
-{
-    public void Disable(EventInterface eintf)
-    {
-    }
-
-    public void Enable(EventInterface eintf)
-    {
-        eintf.AddEnableLine("There is more \"fish\"");
-    }
-
-    public static IEventFactory factory() {
-        return new IEventFactory
-        {
-            New = () => new TestEvent2(),
-            FromJson = _ => new TestEvent2()
-        };
-    }
-
-    public JObject to_json()
-    {
-        return [];
-    }
-}
-
 public struct EnableMessage
 {
     public Dictionary<AllEvents, JObject> events;
