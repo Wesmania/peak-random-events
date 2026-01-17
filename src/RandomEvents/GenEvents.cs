@@ -21,6 +21,7 @@ public enum AllEvents
     FREE_BALLOON = 4,
     NO_SCUTTLING = 5,
     SUPER_RESCUE_HOOKS = 6,
+    DOOM_MODE = 7,
 };
 public interface IEvent
 {
@@ -36,6 +37,7 @@ public interface IEvent
         { AllEvents.FREE_BALLOON, FreeBalloonEvent.factory() },
         { AllEvents.NO_SCUTTLING, NoScuttlingEvent.factory() },
         { AllEvents.SUPER_RESCUE_HOOKS, SuperRescueHookEvent.factory() },
+        { AllEvents.DOOM_MODE, DoomModeEvent.factory() },
     };
 }
 public struct EnableMessage
