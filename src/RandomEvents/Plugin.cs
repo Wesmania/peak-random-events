@@ -2,10 +2,21 @@
 using BepInEx.Logging;
 using ExitGames.Client.Photon;
 using HarmonyLib;
-using TMPro;
-using UnityEngine;
 
 namespace RandomEvents;
+
+
+[HarmonyPatch(typeof(GUIManager))]
+public static class GlobalBehaviours
+{
+    public static DoomMusic? doom_music;
+    [HarmonyPostfix]
+    [HarmonyPatch("Start")]
+    public static void StartPostfix(GUIManager __instance)
+    {
+        doom_music = __instance.gameObject.AddComponent<DoomMusic>();
+    }
+}
 
 [BepInAutoPlugin]
 public partial class Plugin : BaseUnityPlugin

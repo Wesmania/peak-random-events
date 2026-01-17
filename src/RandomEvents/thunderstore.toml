@@ -24,6 +24,10 @@ source = "../../artifacts/bin/RandomEvents/release/com.github.Wesmania.RandomEve
 target = "plugins/"
 
 [[build.copy]]
+source = "../RandomEvents_e1m1.mp3"
+target = "plugins/"
+
+[[build.copy]]
 source = "../../CHANGELOG.md"
 target = "/"
 
