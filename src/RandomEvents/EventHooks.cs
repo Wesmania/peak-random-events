@@ -8,6 +8,10 @@ static class Stuff
 {
     public static void NewEvents(bool is_first)
     {
+        if (!Photon.Pun.PhotonNetwork.IsMasterClient)
+        {
+            return;
+        }
         var new_events = Plugin.pick_events.PickNewEvents(is_first);
         if (new_events != null)
         {

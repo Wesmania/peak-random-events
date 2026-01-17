@@ -3,6 +3,7 @@ using System.ComponentModel;
 using HarmonyLib;
 using Newtonsoft.Json.Linq;
 using Photon.Pun;
+using pworld.Scripts.Extensions;
 using UnityEngine;
 using Zorro.Core;
 
@@ -21,22 +22,21 @@ class SuperRescueHook
             ItemInstanceData d = new(Guid.NewGuid());
 
             // Infinite uses
-            var k = d.RegisterNewEntry<IntItemData>(DataEntryKey.ItemUses);
-            k.Value = -1;
-
+            var k = d.RegisterNewEntry<OptionableIntItemData>(DataEntryKey.ItemUses);
+            k.HasData = false;
             ItemInstanceDataHandler.AddInstanceData(d);
             if (p.AddItem(item_id, d, out ItemSlot s))
             {
-                // Done, TODO remember what item it was?
                 continue;
             }
-            Vector3 spawnPos = player.Center + Vector3.up * 0.2f + Vector3.forward * 0.1f;
-            GameObject rh = PhotonNetwork.Instantiate("0_Items/" + item_name, spawnPos, Quaternion.identity);
-            RescueHook h = rh.GetComponent<RescueHook>();
-            h.item.totalUses = -1;
+            // Otherwise, spawn it for the player.
+            var pos = player.GetBodypart(BodypartType.Hip).transform;
+            Vector3 spawnPos = pos.position + pos.forward * 0.6f;
+            GameObject rh = PhotonNetwork.Instantiate("0_Items/" + item_name, spawnPos, Quaternion.identity, 0);
+            var pv = rh.GetComponent<PhotonView>();
+            pv.RPC("SetItemInstanceDataRPC", RpcTarget.All, d);
         }
     }
-
     // Called by master.
     public static void CleanupAllHooks()
     {
@@ -44,16 +44,15 @@ class SuperRescueHook
         {
             if (!itemSlot.IsEmpty() && itemSlot.prefab != null && itemSlot.prefab.itemID == item_id && itemSlot.data != null)
             {
-                if (itemSlot.data.TryGetDataEntry<IntItemData>(DataEntryKey.ItemUses, out IntItemData v))
+                if (itemSlot.data.TryGetDataEntry<OptionableIntItemData>(DataEntryKey.ItemUses, out OptionableIntItemData v))
                 {
-                    if (v.Value == -1)
+                    if (v != null && !v.HasData)
                     {
                         clean(itemSlot);
                     }
                 }
             }
         }
-
         foreach (var player in Character.AllCharacters)
         {
             var p = player.player;
@@ -67,8 +66,16 @@ class SuperRescueHook
             cleanSlot(p.tempFullSlot, s => p.EmptySlot(Optionable<byte>.Some(s.itemSlotID)));
 
             // Clean any worn backpacks.
-            if (((ItemSlot)p.backpackSlot).data.TryGetDataEntry<BackpackData>((DataEntryKey)7, out BackpackData b) && b?.itemSlots != null)
+            if (p.backpackSlot.IsEmpty())
             {
+                continue;
+            }
+            if (p.backpackSlot.data.TryGetDataEntry<BackpackData>(DataEntryKey.BackpackData, out BackpackData b))
+            {
+                if (b?.itemSlots == null)
+                {
+                    continue;
+                }
                 foreach (ItemSlot itemSlot in b.itemSlots)
                 {
                     cleanSlot(itemSlot, s =>
@@ -82,10 +89,15 @@ class SuperRescueHook
         }
 
         // Clean any loose hooks.
-        foreach (Item i in UnityEngine.Object.FindObjectsByType<Item>(FindObjectsSortMode.None))
+        Item[] items = UnityEngine.Object.FindObjectsByType<Item>(FindObjectsSortMode.None);
+        Item[] i2 = items;
+        foreach (Item i in i2)
         {
-            if (i.itemID == item_id && i.totalUses == -1)
-            {
+            if (i.itemID != item_id) {
+                continue;
+            }
+            var data = i.GetData<OptionableIntItemData>(DataEntryKey.ItemUses);
+            if (!data.HasData) {
                 PhotonNetwork.Destroy(i.photonView);
             }
         }
@@ -119,7 +131,7 @@ public class CharacterUseStaminaPatch
     {
         if (increase_cost)
         {
-            usage *= 2.0f;
+            usage *= 2.5f;
         }
     }
 }
@@ -127,7 +139,10 @@ public class SuperRescueHookEvent : IEvent
 {
     public void Disable(EventInterface eintf)
     {
-        SuperRescueHook.CleanupAllHooks();
+        if (PhotonNetwork.IsMasterClient)
+        {
+            SuperRescueHook.CleanupAllHooks();
+        }
         CharacterUseStaminaPatch.increase_cost = false;
     }
 
@@ -135,7 +150,7 @@ public class SuperRescueHookEvent : IEvent
     {
         eintf.AddEnableLine(new NiceText()
         {
-            s = "Infinite rescue hooks.",
+            s = "Infinite rescue claws.",
             c = Color.green,
         });
         eintf.AddEnableLine(new NiceText()
@@ -143,7 +158,10 @@ public class SuperRescueHookEvent : IEvent
             s = "Climbing costs much more stamina.",
             c = Color.red,
         });
-        SuperRescueHook.GiveEveryoneHooks();
+        if (PhotonNetwork.IsMasterClient)
+        {
+            SuperRescueHook.GiveEveryoneHooks();
+        }
         CharacterUseStaminaPatch.increase_cost = true;
     }
 

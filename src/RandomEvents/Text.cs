@@ -137,15 +137,13 @@ public class TextSetter : MonoBehaviour
         StartCoroutine(DoShow());
         IEnumerator DoShow()
         {
-            while(true) {
-                t!.PlaceText(_end);
-                yield return new WaitForSeconds(delay_end);
-                t!.Hide();
-                yield return new WaitForSeconds(1f);
-                t!.PlaceText(_start);
-                yield return new WaitForSeconds(delay_start);
-                t!.Hide();
-            }
+            t!.PlaceText(_end);
+            yield return new WaitForSeconds(delay_end);
+            t!.Hide();
+            yield return new WaitForSeconds(1f);
+            t!.PlaceText(_start);
+            yield return new WaitForSeconds(delay_start);
+            t!.Hide();
         }
     }
 }
