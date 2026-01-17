@@ -20,6 +20,7 @@ public enum AllEvents
     CURSE_DAMAGE = 3,
     FREE_BALLOON = 4,
     NO_SCUTTLING = 5,
+    SUPER_RESCUE_HOOKS = 6,
 };
 public interface IEvent
 {
@@ -34,6 +35,7 @@ public interface IEvent
         { AllEvents.CURSE_DAMAGE, CurseDamageEvent.factory() },
         { AllEvents.FREE_BALLOON, FreeBalloonEvent.factory() },
         { AllEvents.NO_SCUTTLING, NoScuttlingEvent.factory() },
+        { AllEvents.SUPER_RESCUE_HOOKS, SuperRescueHookEvent.factory() },
     };
 }
 public struct EnableMessage
