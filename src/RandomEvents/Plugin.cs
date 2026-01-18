@@ -39,6 +39,7 @@ public partial class Plugin : BaseUnityPlugin
         }
 
         Log = Logger;
+
         Log.LogInfo($"Plugin {Name} is loaded!");
     }
 
@@ -61,5 +62,4 @@ public partial class Plugin : BaseUnityPlugin
                 break;
         }
     }
-        
 }

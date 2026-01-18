@@ -173,7 +173,7 @@ public class SuperRescueHookEvent : IEvent
     {
         return new IEventFactory
         {
-            New = () => new SuperRescueHookEvent(),
+            New = _ => new SuperRescueHookEvent(),
             FromJson = _ => new SuperRescueHookEvent(),
         };
     }

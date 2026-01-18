@@ -125,7 +125,6 @@ public static class HeatEmissionsPatch
 public class HeatEmissionEvent : IEvent
 {
     private PlayerEmission e;
-    private static System.Random rng = new();
     public HeatEmissionEvent(EmissionType et)
     {
         this.e = new PlayerEmission(et);
@@ -133,7 +132,8 @@ public class HeatEmissionEvent : IEvent
 
     public HeatEmissionEvent()
     {
-        var et = (EmissionType)(rng.Next() % 3);
+
+        var et = (EmissionType) UnityEngine.Random.Range(0, 3);
         this.e = new PlayerEmission(et);
     }
 
@@ -180,7 +180,7 @@ public class HeatEmissionEvent : IEvent
     {
         return new IEventFactory
         {
-            New = () => new HeatEmissionEvent(),
+            New = _ => new HeatEmissionEvent(),
             FromJson = o =>
             {
                 EmissionType et = (EmissionType)((int?)o.GetValue("et")).GetValueOrDefault((int) EmissionType.HEAT);

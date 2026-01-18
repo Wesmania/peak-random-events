@@ -69,7 +69,6 @@ public class DoomMusic : MonoBehaviour
             {
                 Destroy(musicObj);
             }
-            Plugin.Log.LogInfo("Obj");
             musicObj = new GameObject("RandomEventsDoomModeMusic");
             var audioSource = musicObj.AddComponent<AudioSource>();
             audioSource.clip = e1m1;
@@ -103,7 +102,7 @@ public class DoomModeEvent : IEvent
     {
         return new IEventFactory
         {
-            New = () => new DoomModeEvent(),
+            New = _ => new DoomModeEvent(),
             FromJson = _ => new DoomModeEvent(),
         };
     }

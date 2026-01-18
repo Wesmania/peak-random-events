@@ -36,9 +36,8 @@ public class EventInterface()
     }
     public void RunInterface(float delay_end, float delay_start)
     {
-        Plugin.Log.LogInfo($"Running interface");
         SoulmateTextPatch.setter?.ShowCard(finish_texts, delay_end, start_texts, delay_start);
         start_texts.Clear();
         finish_texts.Clear();
-    } 
+    }
 }

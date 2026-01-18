@@ -11,7 +11,6 @@ public class TiedBalloonPatch
 {
     // Balloon owner controls his balloon.
     private static TiedBalloon? my_balloon;
-    private static System.Random rng = new();
 
     [HarmonyPrefix]
     [HarmonyPatch("Pop")]
@@ -40,7 +39,8 @@ public class TiedBalloonPatch
         Character character = c!;
         var balloons = character.refs.balloons;
         var balloonTie = balloons.balloonTie;
-        var colorIndex = rng.Next() % balloons.balloonColors.Length;
+
+        var colorIndex = UnityEngine.Random.Range(0, balloons.balloonColors.Length);
 
         // Borrowed from balloon tying function
         my_balloon = PhotonNetwork.Instantiate("TiedBalloon", character.Center, Quaternion.identity, 0).GetComponent<TiedBalloon>();
@@ -81,7 +81,7 @@ public class FreeBalloonEvent : IEvent
     {
         return new IEventFactory
         {
-            New = () => new FreeBalloonEvent(),
+            New = _ => new FreeBalloonEvent(),
             FromJson = _ => new FreeBalloonEvent(),
         };
     }

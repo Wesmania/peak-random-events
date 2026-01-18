@@ -111,7 +111,7 @@ public class CurseDamageEvent : IEvent
     {
         return new IEventFactory
         {
-            New = () => new CurseDamageEvent(),
+            New = _ => new CurseDamageEvent(),
             FromJson = _ => new CurseDamageEvent(),
         };
     }

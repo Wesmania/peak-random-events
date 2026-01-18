@@ -38,7 +38,6 @@ public class GreatMagicianEvent : IEvent
     private SkinColor sc;
     private GameObject o;
     int original_color = -1;
-    private static System.Random rng = new();
 
     void SetGo()
     {
@@ -52,14 +51,14 @@ public class GreatMagicianEvent : IEvent
     }
     GreatMagicianEvent()
     {
-        var random = rng.Next() % 4 > 0;
+        var random = UnityEngine.Random.Range(0, 4) > 0;
         if (random)
         {
             sc = SkinColor.RANDOM;
         }
         else
         {
-            sc = (SkinColor)(rng.Next() % 9);
+            sc = (SkinColor) UnityEngine.Random.Range(0, 9);
         }
         SetGo();
     }
@@ -95,7 +94,7 @@ public class GreatMagicianEvent : IEvent
     {
         if (sc == SkinColor.RANDOM)
         {
-            return rng.Next() % 9;
+            return UnityEngine.Random.Range(0, 9);
         }
         else
         {
@@ -127,7 +126,7 @@ public class GreatMagicianEvent : IEvent
     {
         return new IEventFactory
         {
-            New = () => new GreatMagicianEvent(),
+            New = _ => new GreatMagicianEvent(),
             FromJson = o =>
             {
                 SkinColor sc = (SkinColor)((int?)o.GetValue("sc")).GetValueOrDefault((int)SkinColor.RANDOM);

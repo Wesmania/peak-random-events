@@ -75,7 +75,7 @@ public class NoScuttlingEvent : IEvent
     {
         return new IEventFactory
         {
-            New = () => new NoScuttlingEvent(),
+            New = _ => new NoScuttlingEvent(),
             FromJson = _ => new NoScuttlingEvent(),
         };
     }
