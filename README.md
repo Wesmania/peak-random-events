@@ -12,6 +12,10 @@ Adds random modifiers to each biome. For now they remain secret to not spoil the
 
 Either automatically via mod manager, or extract the mod's plugins directory to BepInEx/plugins.
 
+## Usage
+
+Press F3 to see event descriptions again after they disappear.
+
 ### TODO
 
 * Test multiplayer.

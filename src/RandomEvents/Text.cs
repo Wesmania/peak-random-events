@@ -121,10 +121,12 @@ public static class SoulmateTextPatch
         setter.Init(t);
     }
 }
+
 public class TextSetter : MonoBehaviour
 {
 
     DoText? t;
+    bool keyShow = false;
 
     public void Init(DoText _t)
     {
@@ -141,6 +143,22 @@ public class TextSetter : MonoBehaviour
             t!.PlaceText(_start);
             yield return new WaitForSeconds(10f);
             t!.Hide();
+        }
+    }
+
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.F3))
+        {
+            keyShow = !keyShow;
+            if (keyShow)
+            {
+                t?.Show();
+            }
+            else
+            {
+                t?.Hide();
+            }
         }
     }
 }
