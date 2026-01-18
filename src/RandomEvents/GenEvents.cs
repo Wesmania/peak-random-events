@@ -39,6 +39,7 @@ public enum AllEvents
     SUPER_RESCUE_HOOKS = 6,
     DOOM_MODE = 7,
     FROSTBITE = 8,
+    BOUNCY = 9,
 };
 
 public static class BiomeConv
@@ -88,6 +89,7 @@ public interface IEvent
         { AllEvents.SUPER_RESCUE_HOOKS, SuperRescueHookEvent.factory() },
         { AllEvents.DOOM_MODE, DoomModeEvent.factory() },
         { AllEvents.FROSTBITE, FrostbiteEvent.factory() },
+        { AllEvents.BOUNCY, BouncyEvent.factory() },
     };
 }
 public struct EnableMessage

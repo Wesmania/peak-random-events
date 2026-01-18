@@ -122,7 +122,6 @@ class SuperRescueHook
     }
 }
 
-
 [HarmonyPatch(typeof(Character), "UseStamina")]
 public class CharacterUseStaminaPatch
 {
