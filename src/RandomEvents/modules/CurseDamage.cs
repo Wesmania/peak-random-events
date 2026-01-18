@@ -115,4 +115,12 @@ public class CurseDamageEvent : IEvent
             FromJson = _ => new CurseDamageEvent(),
         };
     }
+
+    public HashSet<AllEvents> Conflicts()
+    {
+        return [
+            AllEvents.FROSTBITE,
+            AllEvents.EMISSIONS,
+        ];
+    }
 }
