@@ -112,7 +112,7 @@ public class GreatMagicianEvent : IEvent
         Color c = Singleton<Customization>.Instance.skins[i].color;
         eintf.AddEnableLine(new NiceText
         {
-            s = $"I am a great magician. Your scout is {ScStr(sc)}.",
+            s = $"I am a great magician. Your scout is {ScStr((SkinColor) i)}.",
             c = c,
         });
 
