@@ -8,7 +8,7 @@ repository = "https://thunderstore.io"
 namespace = "Wesmania"
 name = "RandomEvents"
 description = "Random modifiers for each biome."
-websiteUrl = "" # TODO: Add a link to your mod repository here (optional)
+websiteUrl = "https://github.com/Wesmania/peak-random-events"
 containsNsfwContent = false
 
 [package.dependencies]
