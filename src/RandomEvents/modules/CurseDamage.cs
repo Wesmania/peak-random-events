@@ -57,7 +57,7 @@ public class SharedDamagePatch
         if (!enabled) return;
         if (!statusType.isCursable()) return;
         if (amount < 0) return;
-        var newCurse = __instance.GetCurrentStatus(CharacterAfflictions.STATUSTYPE.Curse) + amount;
+        var newCurse = __instance.GetCurrentStatus(CharacterAfflictions.STATUSTYPE.Curse) + (amount * multiplier);
         if (newCurse > too_much_curse) return;
         statusType = CharacterAfflictions.STATUSTYPE.Curse;
         amount *= multiplier;
@@ -74,7 +74,7 @@ public class SharedDamagePatch
         if (!enabled) return;
         if (!statusType.isCursable()) return;
         if (amount > 0) return;
-        var newCurse = __instance.GetCurrentStatus(CharacterAfflictions.STATUSTYPE.Curse) - amount;
+        var newCurse = __instance.GetCurrentStatus(CharacterAfflictions.STATUSTYPE.Curse) - (amount * multiplier);
         if (newCurse > too_much_curse) return;
         statusType = CharacterAfflictions.STATUSTYPE.Curse;
         amount *= multiplier;

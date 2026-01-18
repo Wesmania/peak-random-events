@@ -16,13 +16,13 @@ public class TiedBalloonPatch
     [HarmonyPatch("Pop")]
     private static bool PopPrefix(TiedBalloon __instance)
     {
-        if (__instance == my_balloon)
+        if (System.Object.ReferenceEquals(__instance, my_balloon))
         {
             __instance.popHeight += 100f;
             __instance.popTime += 100f;
             return false;
         }
-        return false;
+        return true;
     }
 
     public static void AddPermaBalloonToMe()
@@ -69,8 +69,9 @@ public class FreeBalloonEvent : IEvent
     public void Enable(EventInterface eintf)
     {
         eintf.AddEnableLine("Everyone gets a free balloon :)");
+    }
+    public void LateEnable(EventInterface eintf) {
         TiedBalloonPatch.AddPermaBalloonToMe();
-        SharedDamagePatch.enabled = true;
     }
 
     public JObject to_json()

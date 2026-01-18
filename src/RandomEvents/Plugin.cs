@@ -10,11 +10,13 @@ namespace RandomEvents;
 public static class GlobalBehaviours
 {
     public static DoomMusic? doom_music;
+    public static LateEventCaller? late_events;
     [HarmonyPostfix]
     [HarmonyPatch("Start")]
     public static void StartPostfix(GUIManager __instance)
     {
         doom_music = __instance.gameObject.AddComponent<DoomMusic>();
+        late_events = __instance.gameObject.AddComponent<LateEventCaller>();
     }
 }
 

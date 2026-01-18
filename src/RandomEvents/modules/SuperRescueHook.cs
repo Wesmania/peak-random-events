@@ -1,9 +1,11 @@
 using System;
 using System.ComponentModel;
+using System.Linq;
 using HarmonyLib;
 using Newtonsoft.Json.Linq;
 using Photon.Pun;
 using pworld.Scripts.Extensions;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using Zorro.Core;
 
@@ -25,9 +27,12 @@ class SuperRescueHook
             var k = d.RegisterNewEntry<OptionableIntItemData>(DataEntryKey.ItemUses);
             k.HasData = false;
             ItemInstanceDataHandler.AddInstanceData(d);
-            if (p.AddItem(item_id, d, out ItemSlot s))
+            if (p.itemSlots.Any(s => s.IsEmpty()))
             {
-                continue;
+                if (p.AddItem(item_id, d, out ItemSlot s))
+                {
+                    continue;
+                }
             }
             // Otherwise, spawn it for the player.
             var pos = player.GetBodypart(BodypartType.Hip).transform;
@@ -157,11 +162,15 @@ public class SuperRescueHookEvent : IEvent
             s = "Climbing costs much more stamina.",
             c = Color.red,
         });
+        CharacterUseStaminaPatch.increase_cost = true;
+    }
+
+    public void LateEnable(EventInterface eintf)
+    {
         if (Messages.IsMaster())
         {
             SuperRescueHook.GiveEveryoneHooks();
         }
-        CharacterUseStaminaPatch.increase_cost = true;
     }
 
     public JObject to_json()

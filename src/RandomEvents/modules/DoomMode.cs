@@ -29,6 +29,9 @@ public class JumpPatch
     public static bool doom_mode = false;
     private static bool Prefix(CharacterMovement __instance)
     {
+        bool? webbed = __instance.character.refs?.afflictions.isWebbed;
+        if (webbed.HasValue && webbed.Value) return true;
+
         return !doom_mode;
     }
 }

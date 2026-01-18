@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
@@ -6,6 +7,8 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using pworld.Scripts.Extensions;
 using Sirenix.Utilities;
+using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace RandomEvents;
 
@@ -70,7 +73,15 @@ public static class BiomeConv
 public interface IEvent
 {
     public JObject to_json();
+
+    // Both these functions are called.
+    // * LateEnable is guaranteed to be called while the map is loaded.
+    // * Enable is called before map is loaded once, on Shore.
     public void Enable(EventInterface eintf);
+
+    public void LateEnable(EventInterface eintf)
+    {
+    }
     public void Disable(EventInterface eintf);
     public HashSet<OurBiome> ZoneLimit()
     {
@@ -98,6 +109,22 @@ public struct EnableMessage
 {
     public Dictionary<AllEvents, JObject> events;
     public bool is_first;
+}
+
+public class LateEventCaller : MonoBehaviour
+{
+    public void LoadEvents(List<IEvent> events, EventInterface eintf, float delay)
+    {
+        StartCoroutine(DoLoadEvents(events, eintf, delay));
+    }
+    IEnumerator DoLoadEvents(List<IEvent> events, EventInterface eintf, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        foreach (var e in events)
+        {
+            e.LateEnable(eintf);
+        }
+    }
 }
 
 public class PickEvents
@@ -173,6 +200,7 @@ public class PickEvents
         {
             ev.Enable(eintf);
         }
+        GlobalBehaviours.late_events!.LoadEvents(events, eintf, is_first ? 15f : 0f);
     }
 }
 
