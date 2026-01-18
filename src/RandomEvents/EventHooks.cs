@@ -23,23 +23,17 @@ static class Stuff
     }
 }
 
-[HarmonyPatch(typeof(Character))]
-public static class RecalculateSoulmatesPatch
+[HarmonyPatch(typeof(AirportCheckInKiosk), "LoadIslandMaster")]
+public static class ChangeMapPatch1
 {
-    [HarmonyPostfix]
-    [HarmonyPatch("StartPassedOutOnTheBeach")]
-    public static void StartPassedOutOnTheBeachPostfix(Character __instance)
+    public static void Postfix(AirportCheckInKiosk __instance, int ascent)
     {
-        if (!__instance.IsLocal)
-        {
-            return;
-        }
         Stuff.NewEvents(true, OurBiome.Shore);
     }
 }
 
 [HarmonyPatch(typeof(Campfire))]
-public static class RecalculateSoulmatesPatch2
+public static class ChangeMapPatch2
 {
     [HarmonyPostfix]
     [HarmonyPatch("Light_Rpc")]

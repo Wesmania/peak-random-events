@@ -39,15 +39,16 @@ public class GreatMagicianEvent : IEvent
     private GameObject o;
     int original_color = -1;
 
-    void SetGo()
+    GameObject SetGo()
     {
         o = new GameObject("Great Magician");
         o.AddComponent<DelayedMagic>();
+        return o;
     }
     GreatMagicianEvent(SkinColor _sc)
     {
         sc = _sc;
-        SetGo();
+        o = SetGo();
     }
     GreatMagicianEvent()
     {
@@ -58,9 +59,9 @@ public class GreatMagicianEvent : IEvent
         }
         else
         {
-            sc = (SkinColor) UnityEngine.Random.Range(0, 9);
+            sc = (SkinColor)UnityEngine.Random.Range(0, 9);
         }
-        SetGo();
+        o = SetGo();
     }
     private static String ScStr(SkinColor sc)
     {
@@ -112,7 +113,7 @@ public class GreatMagicianEvent : IEvent
         Color c = Singleton<Customization>.Instance.skins[i].color;
         eintf.AddEnableLine(new NiceText
         {
-            s = $"I am a great magician. Your scout is {ScStr((SkinColor) i)}.",
+            s = $"I am a great magician. Your scout is {ScStr((SkinColor)i)}.",
             c = c,
         });
 

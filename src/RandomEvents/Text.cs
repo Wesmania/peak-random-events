@@ -130,19 +130,16 @@ public class TextSetter : MonoBehaviour
     {
         t = _t;
     }
-    public void ShowCard(List<NiceText> end, float delay_end, List<NiceText> start, float delay_start)
+    public void ShowCard(List<NiceText> start, float delay)
     {
         var _start = new List<NiceText>(start);
-        var _end = new List<NiceText>(end);
         StartCoroutine(DoShow());
         IEnumerator DoShow()
         {
-            t!.PlaceText(_end);
-            yield return new WaitForSeconds(delay_end);
             t!.Hide();
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(delay);
             t!.PlaceText(_start);
-            yield return new WaitForSeconds(delay_start);
+            yield return new WaitForSeconds(10f);
             t!.Hide();
         }
     }

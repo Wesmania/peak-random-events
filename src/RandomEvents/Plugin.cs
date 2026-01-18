@@ -53,9 +53,7 @@ public partial class Plugin : BaseUnityPlugin
         {
             case MessageType.NEW_EVENTS:
                 Plugin.pick_events.LoadNewEvents(c, eintf);
-                float delay_end = Plugin.pick_events.is_first ? 10f : 0f;
-                float delay_start = 10f;
-                eintf.RunInterface(delay_end, delay_start);
+                eintf.RunInterface(eintf.is_first ? 10f : 5f);
                 break;
             case MessageType.STOP_EVENTS:
                 Plugin.pick_events.UnloadEvents(eintf);

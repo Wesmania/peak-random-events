@@ -40,6 +40,7 @@ public enum AllEvents
     DOOM_MODE = 7,
     FROSTBITE = 8,
     BOUNCY = 9,
+    ALL_SHROOMS = 10,
 };
 
 public static class BiomeConv
@@ -90,6 +91,7 @@ public interface IEvent
         { AllEvents.DOOM_MODE, DoomModeEvent.factory() },
         { AllEvents.FROSTBITE, FrostbiteEvent.factory() },
         { AllEvents.BOUNCY, BouncyEvent.factory() },
+        { AllEvents.ALL_SHROOMS, AllShroomsEvent.factory() },
     };
 }
 public struct EnableMessage
@@ -165,6 +167,7 @@ public class PickEvents
         // FIXME handle errors
         EnableMessage em = JsonConvert.DeserializeObject<EnableMessage>(s)!;
         is_first = em.is_first;
+        eintf.is_first = is_first;
         events = em.events.Select(kv => IEvent.all_events[kv.Key].FromJson(kv.Value)).ToList();
         foreach (var ev in events)
         {

@@ -29,3 +29,17 @@ dotnet build -c Release -target:PackTS -v d
 > `-c` is short for `--configuration` and `-v d` is `--verbosity detailed`.
 
 The built package will be found at `artifacts/thunderstore/`.
+
+
+
+
+
+
+
+
+
+### TODO
+
+* Bring up a pawn, or suffer a curse.
+* More/fewer items. (mod integration)
+* Scouts can punch.

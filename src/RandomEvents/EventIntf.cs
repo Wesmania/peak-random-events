@@ -8,7 +8,7 @@ namespace RandomEvents;
 public class EventInterface()
 {
     private List<NiceText> start_texts = [];
-    private List<NiceText> finish_texts = [];
+    public bool is_first = false;
 
     public void AddEnableLine(NiceText line)
     {
@@ -22,22 +22,9 @@ public class EventInterface()
             c = Color.white,
         });
     }
-    public void AddDisableLine(NiceText line)
+    public void RunInterface(float delay)
     {
-        finish_texts.Add(line);
-    }
-    public void AddDisableLine(String line)
-    {
-        AddDisableLine(new NiceText
-        {
-            s = line,
-            c = Color.white,
-        });
-    }
-    public void RunInterface(float delay_end, float delay_start)
-    {
-        SoulmateTextPatch.setter?.ShowCard(finish_texts, delay_end, start_texts, delay_start);
+        SoulmateTextPatch.setter?.ShowCard(start_texts, delay);
         start_texts.Clear();
-        finish_texts.Clear();
     }
 }
