@@ -138,7 +138,7 @@ public class SuperRescueHookEvent : IEvent
 {
     public void Disable(EventInterface eintf)
     {
-        if (PhotonNetwork.IsMasterClient)
+        if (Messages.IsMaster())
         {
             SuperRescueHook.CleanupAllHooks();
         }
@@ -157,7 +157,7 @@ public class SuperRescueHookEvent : IEvent
             s = "Climbing costs much more stamina.",
             c = Color.red,
         });
-        if (PhotonNetwork.IsMasterClient)
+        if (Messages.IsMaster())
         {
             SuperRescueHook.GiveEveryoneHooks();
         }

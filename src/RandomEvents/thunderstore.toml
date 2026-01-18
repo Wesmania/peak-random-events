@@ -1,5 +1,5 @@
 [config]
-schemaVersion = "0.0.1"
+schemaVersion = "0.1.0"
 
 [general]
 repository = "https://thunderstore.io"
@@ -7,7 +7,7 @@ repository = "https://thunderstore.io"
 [package]
 namespace = "Wesmania"
 name = "RandomEvents"
-description = "TODO: Fill in short mod description."
+description = "Random modifiers for each biome."
 websiteUrl = "" # TODO: Add a link to your mod repository here (optional)
 containsNsfwContent = false
 

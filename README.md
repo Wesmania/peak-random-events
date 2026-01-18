@@ -1,45 +1,24 @@
-# RandomEvents
+Adds random modifiers to each biome. For now they remain secret to not spoil the fun.
 
-Describe your project here!
+**This is a client side mod!** Make sure all players have this mod when playing the game.
 
-## Template Instructions
+**This is an alpha version**. Here are the things that weren't tested or implemented:
 
-You can remove this section after you've set up your project.
+* Multiplayer was not tested. In principle it should work, but there may be bugs.
+* No support for players leaving/joining yet. Players joining won't experience
+  some random modifiers. Hosts leaving might break some modifiers.
 
-Next steps:
+## Installation
 
-- Create a copy of the `Config.Build.user.props.template` file and name it `Config.Build.user.props`
-  - This will automate copying your plugin assembly to `BepInEx/plugins/`
-  - Configure the paths to point to your game path and your `BepInEx/plugins/`
-  - Game assembly references should work if the path to the game is valid
-- Search `TODO` in the whole project to see what you should configure or modify
-
-### Thunderstore Packaging
-
-This template comes with Thunderstore packaging built-in, using [TCLI](<https://github.com/thunderstore-io/thunderstore-cli>).
-
-You can build Thunderstore packages by running:
-
-```sh
-dotnet build -c Release -target:PackTS -v d
-```
-
-> [!NOTE]  
-> You can learn about different build options with `dotnet build --help`.  
-> `-c` is short for `--configuration` and `-v d` is `--verbosity detailed`.
-
-The built package will be found at `artifacts/thunderstore/`.
-
-
-
-
-
-
-
-
+Either automatically via mod manager, or extract the mod's plugins directory to BepInEx/plugins.
 
 ### TODO
 
-* Bring up a pawn, or suffer a curse.
-* More/fewer items. (mod integration)
-* Scouts can punch.
+* Test multiplayer.
+* Handle players joining/leaving more gracefully.
+
+* New effects:
+  * Bring up a pawn, or suffer a curse.
+  * More/fewer items. (mod integration)
+  * Scout punching.
+  * Other mod integrations.

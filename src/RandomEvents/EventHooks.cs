@@ -10,7 +10,7 @@ static class Stuff
 {
     public static void NewEvents(bool is_first, OurBiome biome)
     {
-        if (!Photon.Pun.PhotonNetwork.IsMasterClient)
+        if (!Messages.IsMaster())
         {
             return;
         }
