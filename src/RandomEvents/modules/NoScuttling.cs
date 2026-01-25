@@ -21,7 +21,7 @@ public class CharacterClimbingPatch
             float a = vector.magnitude;
 
             // Our anti-scuttling changes.
-            float cmp = allow_scuttling ? 0f : -a / 2.0f;
+            float cmp = allow_scuttling ? 0f : -a / 1.3f;
             if (Vector3.Dot(vector, Vector3.up) < cmp)
             {
                 a = 0f;

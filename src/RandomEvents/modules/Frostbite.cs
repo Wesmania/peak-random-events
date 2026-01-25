@@ -2,11 +2,9 @@ using System;
 using System.Collections.Generic;
 using HarmonyLib;
 using Newtonsoft.Json.Linq;
-using Steamworks;
 using UnityEngine;
 
 namespace RandomEvents;
-
 
 [HarmonyPatch(typeof(CharacterAfflictions))]
 public class FrostbitePatch
@@ -15,7 +13,21 @@ public class FrostbitePatch
     public bool enabled = false;
     public CharacterAfflictions.STATUSTYPE kind = CharacterAfflictions.STATUSTYPE.Cold;
     private float lastTick = Time.time;
-    static float threshold = 0.5f;
+    float threshold
+    {
+        get
+        {
+            if (kind == CharacterAfflictions.STATUSTYPE.Cold)
+            {
+                return cold_threshold;
+            } else
+            {
+                return burn_threshold;
+            }
+        }
+    }
+    static float cold_threshold = 0.5f;
+    static float burn_threshold = 0.35f;
 
     private float damageChance()
     {
@@ -43,7 +55,7 @@ public class FrostbitePatch
     {
         if (__state == -1f) return;
         var current = __instance.GetCurrentStatus(instance.kind);
-        if (current < threshold) return;
+        if (current < instance.threshold) return;
         var diff = __state - __instance.GetCurrentStatus(instance.kind);
         if (diff < 0.0249f || diff > 0.0251f) return;
         Plugin.Log.LogInfo($"Chance {instance.damageChance()}");
@@ -61,7 +73,7 @@ public class FrostbitePatch
         if (!instance.enabled) return;
         if (statusType != instance.kind) return;
         var current = __instance.GetCurrentStatus(instance.kind);
-        if (current < threshold && current + amount >= threshold)
+        if (current < instance.threshold && current + amount >= instance.threshold)
         {
             instance.lastTick = Time.time;
         }
