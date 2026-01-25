@@ -2,6 +2,8 @@
 using BepInEx.Logging;
 using ExitGames.Client.Photon;
 using HarmonyLib;
+using Photon.Pun;
+using Photon.Realtime;
 
 namespace RandomEvents;
 
@@ -23,6 +25,34 @@ public static class GlobalBehaviours
     }
 }
 
+public class PhotonCallbacks : IInRoomCallbacks
+{
+    public void OnMasterClientSwitched(Photon.Realtime.Player newMasterClient)
+    {
+        return;
+    }
+
+    public void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
+    {
+        Stuff.ResendEvent(newPlayer);
+    }
+
+    public void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
+    {
+        return;
+    }
+
+    public void OnPlayerPropertiesUpdate(Photon.Realtime.Player targetPlayer, Hashtable changedProps)
+    {
+        return;
+    }
+
+    public void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
+    {
+        return;
+    }
+}
+
 [BepInAutoPlugin]
 [BepInDependency("com.github.Wesmania.ItemMultiplierBis", BepInDependency.DependencyFlags.SoftDependency)]  // For item multiplier event
 public partial class Plugin : BaseUnityPlugin
@@ -31,6 +61,7 @@ public partial class Plugin : BaseUnityPlugin
     public static PickEvents pick_events = new();
     public static Messages m = new(Plugin.HandleMessages);
     public static EventInterface eintf = new();
+    public static PhotonCallbacks pcb = new();
     private void Awake()
     {
 
@@ -43,6 +74,8 @@ public partial class Plugin : BaseUnityPlugin
         {
             Log.LogError($"Failed to load mod: {ex}");
         }
+
+        PhotonNetwork.AddCallbackTarget(pcb);
 
         Log = Logger;
 
