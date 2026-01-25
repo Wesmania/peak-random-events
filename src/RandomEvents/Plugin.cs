@@ -11,16 +11,20 @@ public static class GlobalBehaviours
 {
     public static DoomMusic? doom_music;
     public static LateEventCaller? late_events;
+    public static RamadanDelay? ramadan;
+
     [HarmonyPostfix]
     [HarmonyPatch("Start")]
     public static void StartPostfix(GUIManager __instance)
     {
         doom_music = __instance.gameObject.AddComponent<DoomMusic>();
         late_events = __instance.gameObject.AddComponent<LateEventCaller>();
+        ramadan = __instance.gameObject.AddComponent<RamadanDelay>();
     }
 }
 
 [BepInAutoPlugin]
+[BepInDependency("com.github.Wesmania.ItemMultiplierBis", BepInDependency.DependencyFlags.SoftDependency)]  // For item multiplier event
 public partial class Plugin : BaseUnityPlugin
 {
     public static ManualLogSource Log = null!;

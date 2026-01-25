@@ -44,6 +44,7 @@ public enum AllEvents
     FROSTBITE = 8,
     BOUNCY = 9,
     ALL_SHROOMS = 10,
+    RAMADAN = 11,
 };
 
 public static class BiomeConv
@@ -103,6 +104,7 @@ public interface IEvent
         { AllEvents.FROSTBITE, FrostbiteEvent.factory() },
         { AllEvents.BOUNCY, BouncyEvent.factory() },
         { AllEvents.ALL_SHROOMS, AllShroomsEvent.factory() },
+        { AllEvents.RAMADAN, RamadanEvent.factory() },
     };
 }
 public struct EnableMessage
@@ -132,7 +134,11 @@ public class PickEvents
     static int EVENT_COUNT = 2;
     List<IEvent> events = [];
     public bool is_first = true;
-
+    // For testing events
+    private AllEvents? OverrideEvent()
+    {
+        return null;
+    }
     public String? PickNewEvents(bool is_first, OurBiome biome)
     {
         if (!Messages.IsMaster())
@@ -140,11 +146,19 @@ public class PickEvents
             return null;
         }
         var all_e = Enum.GetValues(typeof(AllEvents)).Cast<AllEvents>().ToList();
+        var oe = OverrideEvent();
+        if (oe.HasValue)
+        {
+            all_e[0] = oe.Value;
+            EVENT_COUNT = 1;
+        }
 
         // Select all candidates first.
         var all = all_e.Select(e => (id: e, e: IEvent.all_events[e].New(biome)))
                         .Where(e => e.e.ZoneLimit().Count == 0 || e.e.ZoneLimit().Contains(biome)).ToList();
-        all.Shuffle();
+        if (!oe.HasValue) {
+            all.Shuffle();
+        }
 
         // Now filter conflicting candidates, in order.
         HashSet<AllEvents> excludes = [];
