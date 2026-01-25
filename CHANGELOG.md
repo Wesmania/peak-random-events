@@ -8,3 +8,7 @@ Release
 
 * Fix some bugs.
 * You can now press F3 to check events again.
+
+## V0.1.2
+
+* New event.
