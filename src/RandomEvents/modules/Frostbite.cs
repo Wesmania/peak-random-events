@@ -58,7 +58,6 @@ public class FrostbitePatch
         if (current < instance.threshold) return;
         var diff = __state - __instance.GetCurrentStatus(instance.kind);
         if (diff < 0.0249f || diff > 0.0251f) return;
-        Plugin.Log.LogInfo($"Chance {instance.damageChance()}");
         if (UnityEngine.Random.Range(0f, 1f) <= instance.damageChance())
         {
             __instance.AddStatus(CharacterAfflictions.STATUSTYPE.Injury, 0.025f, false, false);

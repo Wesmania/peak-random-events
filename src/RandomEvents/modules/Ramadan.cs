@@ -7,9 +7,10 @@ using UnityEngine;
 
 namespace RandomEvents;
 
-class Ramadan
+class Ramadan: ItemBan
 {
     public static bool enabled = false;
+    public static Ramadan? instance = null;
     private static HashSet<string> HaramItems = [
         "Airline Food",
         "Antidote",
@@ -111,6 +112,16 @@ class Ramadan
         }
         return false;
     }
+
+    public override bool BanPrimary(Item i, string name)
+    {
+        return IsHaram(name) && !CanBreakFast();
+    }
+
+    public override bool BanSecondary(Item i, string name)
+    {
+        return IsHaram(name);
+    }
 }
 
 public class RamadanDelay : MonoBehaviour
@@ -122,50 +133,18 @@ public class RamadanDelay : MonoBehaviour
         {
             yield return new WaitForSeconds(15.0f);
             Ramadan.enabled = true;
+            Ramadan.instance = new();
+            AllBans.RegisterBan(Ramadan.instance);
         }
     }
 }
-
-
-[HarmonyPatch(typeof(Item), "CanUsePrimary")]
-class RamadanPatchMe
-{
-    private static bool Prefix(Item __instance, ref bool __result)
-    {
-        // Names of cloned object have "(Clone)" appended.
-        var name = __instance.name;
-        var i = name.IndexOf("(");
-        if (i != -1) {
-            name = name[..i];
-        }
-        if (Ramadan.IsHaram(name) && !Ramadan.CanBreakFast())
-        {
-            __result = false;
-            return false;
-        }
-        return true;
-    }
-}
-
-[HarmonyPatch(typeof(Item), "CanUseSecondary")]
-class RamadanPatchOthers
-{
-    private static bool Prefix(Item __instance, ref bool __result)
-    {
-        if (Ramadan.IsHaram(__instance.UIData.itemName))
-        {
-            __result = false;
-            return false;
-        }
-        return true;
-    }
-}
-
 public class RamadanEvent : IEvent
 {
     public void Disable(EventInterface eintf)
     {
         Ramadan.enabled = false;
+        Ramadan.instance?.Dispose();
+        Ramadan.instance = null;
     }
 
     public void Enable(EventInterface eintf)

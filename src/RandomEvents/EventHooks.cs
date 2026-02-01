@@ -17,6 +17,7 @@ static class Stuff
             return;
         }
         new_events = Plugin.pick_events.PickNewEvents(is_first, biome);
+
         if (new_events != null)
         {
             Plugin.m.SendEvent(MessageType.STOP_EVENTS, "", ReceiverGroup.All, true);

@@ -46,6 +46,7 @@ public enum AllEvents
     ALL_SHROOMS = 10,
     RAMADAN = 11,
     PUNCH = 12,
+    MEGABOOST = 13,
 };
 
 public static class BiomeConv
@@ -107,6 +108,7 @@ public interface IEvent
         { AllEvents.ALL_SHROOMS, AllShroomsEvent.factory() },
         { AllEvents.RAMADAN, RamadanEvent.factory() },
         { AllEvents.PUNCH, SlapEvent.factory() },
+        { AllEvents.MEGABOOST, MegaboostEvent.factory() },
     };
 }
 public struct EnableMessage

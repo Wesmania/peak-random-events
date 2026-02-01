@@ -26,20 +26,8 @@ class SuperRescueHook
             // Infinite uses
             var k = d.RegisterNewEntry<OptionableIntItemData>(DataEntryKey.ItemUses);
             k.HasData = false;
-            ItemInstanceDataHandler.AddInstanceData(d);
-            if (p.itemSlots.Any(s => s.IsEmpty()))
-            {
-                if (p.AddItem(item_id, d, out ItemSlot s))
-                {
-                    continue;
-                }
-            }
-            // Otherwise, spawn it for the player.
-            var pos = player.GetBodypart(BodypartType.Hip).transform;
-            Vector3 spawnPos = pos.position + pos.forward * 0.6f;
-            GameObject rh = PhotonNetwork.Instantiate("0_Items/" + item_name, spawnPos, Quaternion.identity, 0);
-            var pv = rh.GetComponent<PhotonView>();
-            pv.RPC("SetItemInstanceDataRPC", RpcTarget.All, d);
+
+            GiveItem.Do(player, item_id, item_name, d);
         }
     }
     // Called by master.

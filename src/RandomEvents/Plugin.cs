@@ -4,6 +4,7 @@ using ExitGames.Client.Photon;
 using HarmonyLib;
 using Photon.Pun;
 using Photon.Realtime;
+using UnityEngine;
 
 namespace RandomEvents;
 
@@ -11,6 +12,7 @@ namespace RandomEvents;
 [HarmonyPatch(typeof(GUIManager))]
 public static class GlobalBehaviours
 {
+    public static GameObject? coro;
     public static DoomMusic? doom_music;
     public static LateEventCaller? late_events;
     public static RamadanDelay? ramadan;
@@ -19,9 +21,12 @@ public static class GlobalBehaviours
     [HarmonyPatch("Start")]
     public static void StartPostfix(GUIManager __instance)
     {
-        doom_music = __instance.gameObject.AddComponent<DoomMusic>();
-        late_events = __instance.gameObject.AddComponent<LateEventCaller>();
-        ramadan = __instance.gameObject.AddComponent<RamadanDelay>();
+        if (coro != null) return;
+        coro = new GameObject("coro_2");
+        UnityEngine.Object.DontDestroyOnLoad(coro);
+        doom_music = coro.AddComponent<DoomMusic>();
+        late_events = coro.AddComponent<LateEventCaller>();
+        ramadan = coro.AddComponent<RamadanDelay>();
     }
 }
 
