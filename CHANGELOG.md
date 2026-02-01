@@ -17,3 +17,8 @@ Release
 
 * Balance changes.
 * Some rejoin support.
+
+## V0.1.4
+
+* Fix mod after recent game changes.
+* Two new events.
