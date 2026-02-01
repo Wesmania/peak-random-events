@@ -45,6 +45,7 @@ public enum AllEvents
     BOUNCY = 9,
     ALL_SHROOMS = 10,
     RAMADAN = 11,
+    PUNCH = 12,
 };
 
 public static class BiomeConv
@@ -105,6 +106,7 @@ public interface IEvent
         { AllEvents.BOUNCY, BouncyEvent.factory() },
         { AllEvents.ALL_SHROOMS, AllShroomsEvent.factory() },
         { AllEvents.RAMADAN, RamadanEvent.factory() },
+        { AllEvents.PUNCH, SlapEvent.factory() },
     };
 }
 public struct EnableMessage
@@ -210,6 +212,7 @@ public class PickEvents
         is_first = em.is_first;
         eintf.is_first = is_first;
         events = em.events.Select(kv => IEvent.all_events[kv.Key].FromJson(kv.Value)).ToList();
+        eintf.activeEvents = [.. em.events.Keys];
         foreach (var ev in events)
         {
             ev.Enable(eintf);

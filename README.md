@@ -4,8 +4,8 @@ Adds random modifiers to each biome. For now they remain secret to not spoil the
 
 **This is an alpha version**. Here are the things that weren't tested or implemented:
 
-* No support for players leaving/joining yet. Players joining won't experience
-  some random modifiers. Hosts leaving might break some modifiers.
+* Best-effort support for players re-joining. Might be buggy.
+* No support for changing host.
 
 ## Installation
 

@@ -9,6 +9,7 @@ public class EventInterface()
 {
     private List<NiceText> start_texts = [];
     public bool is_first = false;
+    public List<AllEvents> activeEvents = [];
 
     public void AddEnableLine(NiceText line)
     {
@@ -26,5 +27,10 @@ public class EventInterface()
     {
         SoulmateTextPatch.setter?.ShowCard(start_texts, delay);
         start_texts.Clear();
+    }
+
+    public List<AllEvents> ActiveEvents()
+    {
+        return activeEvents;
     }
 }

@@ -67,8 +67,8 @@ public class FrostbitePatch
     }
 
     [HarmonyPrefix]
-    [HarmonyPatch("AddStatus", typeof(CharacterAfflictions.STATUSTYPE), typeof(float), typeof(bool), typeof(bool))]
-    public static void AddStatusPrefix(CharacterAfflictions __instance, ref CharacterAfflictions.STATUSTYPE statusType, ref float amount, bool fromRPC, ref bool playEffects)
+    [HarmonyPatch("AddStatus", typeof(CharacterAfflictions.STATUSTYPE), typeof(float), typeof(bool), typeof(bool), typeof(bool))]
+    public static void AddStatusPrefix(CharacterAfflictions __instance, ref CharacterAfflictions.STATUSTYPE statusType, ref float amount, bool fromRPC, ref bool playEffects, bool notify)
     {
         if (!instance.enabled) return;
         if (statusType != instance.kind) return;

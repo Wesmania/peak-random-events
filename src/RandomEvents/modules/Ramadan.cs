@@ -138,7 +138,6 @@ class RamadanPatchMe
         if (i != -1) {
             name = name[..i];
         }
-        Plugin.Log.LogInfo(name);
         if (Ramadan.IsHaram(name) && !Ramadan.CanBreakFast())
         {
             __result = false;

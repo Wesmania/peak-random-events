@@ -18,7 +18,6 @@ public class CharacterLandPatch
         if (!enabled) return;
         if (nested) return;
         nested = true;
-        Plugin.Log.LogInfo("Bounce start");
 
         float num = 5000f;
         if ((bool)__instance.data.currentItem && __instance.data.currentItem.TryGetComponent<Parasol>(out var component) && component.isOpen)
@@ -36,8 +35,6 @@ public class CharacterLandPatch
         var planeNormal = __instance.data.groundNormal;
         SmoothBounce b = __instance.GetComponent<SmoothBounce>() ?? __instance.gameObject.AddComponent<SmoothBounce>();
         b.StartCoroutine(b.BounceRoutine(num, __instance, planeNormal));
-        //__instance.AddForce(Vector3.up * 1000f);
-        Plugin.Log.LogInfo("Bounce end");
         nested = false;
     }
 }
@@ -48,7 +45,6 @@ public class SmoothBounce : MonoBehaviour
         float t = 0f;
         while (t < 1f)
         {
-            Plugin.Log.LogInfo($"Bounce t={t}");
             float num3 = knockback;
             character.AddForce(kb * num3 * (1f - t) * Time.fixedDeltaTime);
             character.data.sinceGrounded = Mathf.Clamp(character.data.sinceGrounded, 0f, 0.5f);

@@ -12,3 +12,8 @@ Release
 ## V0.1.2
 
 * New event.
+
+## V0.1.3
+
+* Balance changes.
+* Some rejoin support.
