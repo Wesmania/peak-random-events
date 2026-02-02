@@ -47,6 +47,7 @@ public enum AllEvents
     RAMADAN = 11,
     PUNCH = 12,
     MEGABOOST = 13,
+    NON_AMBITURNER = 14,
 };
 
 public static class BiomeConv
@@ -109,6 +110,7 @@ public interface IEvent
         { AllEvents.RAMADAN, RamadanEvent.factory() },
         { AllEvents.PUNCH, SlapEvent.factory() },
         { AllEvents.MEGABOOST, MegaboostEvent.factory() },
+        { AllEvents.NON_AMBITURNER, NonAmbiturnerEvent.factory() },
     };
 }
 public struct EnableMessage
