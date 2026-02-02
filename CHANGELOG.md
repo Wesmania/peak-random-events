@@ -22,3 +22,7 @@ Release
 
 * Fix mod after recent game changes.
 * Two new events.
+
+## V0.1.5
+
+* Fix an event being stuck on.

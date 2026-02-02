@@ -18,7 +18,7 @@ namespace RandomEvents;
 
 static class SlapInfo
 {
-    static public bool enabled = true;
+    static public bool enabled = false;
     static public bool is_doom = false;
 
     static private bool DrankEnergol(Character c)
