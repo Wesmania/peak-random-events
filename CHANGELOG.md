@@ -30,3 +30,7 @@ Release
 ## V0.1.6
 
 * Two new events.
+
+## V0.1.7
+
+* Fix slaps.
