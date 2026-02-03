@@ -50,6 +50,7 @@ public enum AllEvents
     MEGABOOST = 13,
     NON_AMBITURNER = 14,
     GRAB_PINGS = 15,
+    BEES = 16,
 };
 
 public static class BiomeConv
@@ -114,6 +115,7 @@ public interface IEvent
         { AllEvents.MEGABOOST, MegaboostEvent.factory() },
         { AllEvents.NON_AMBITURNER, NonAmbiturnerEvent.factory() },
         { AllEvents.GRAB_PINGS, GrabPingsEvent.factory() },
+        { AllEvents.BEES, BeesEvent.factory() },
     };
 }
 public struct EnableMessage
