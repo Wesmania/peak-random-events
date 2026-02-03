@@ -1,18 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Threading.Tasks;
-using AsmResolver.PE.DotNet.Cil;
 using HarmonyLib;
 using Newtonsoft.Json.Linq;
-using Photon.Pun;
-using Photon.Pun.Demo.Cockpit;
-using Photon.Voice.PUN.UtilityScripts;
-using Unity.Burst;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace RandomEvents;
 
@@ -50,7 +42,7 @@ static class SlapInfo
             a.SubtractStatus(s, 0.075f);
         }
 
-        var isStrong = UnityEngine.Random.value < 0.3;
+        var isStrong = UnityEngine.Random.value < 0.1666;
         var punch_s = 4000.0f;
         var fall_s = 0.1f;
         var hurt = 0f;
@@ -58,14 +50,14 @@ static class SlapInfo
         {
             punch_s *= 2;
             fall_s *= 5;
-            hurt += 0.05f;
+            hurt += 0.025f;
         }
 
         if (DrankEnergol(slapper))
         {
-            punch_s *= 2;
-            fall_s *= 2;
-            hurt *= 2;
+            punch_s *= 4;
+            fall_s += 2f;
+            hurt *= 4;
         }
 
         if (is_doom)
@@ -172,15 +164,16 @@ class SlapAction
             float num = Vector3.Distance(character.Center, allCharacter.Center);
             if (!(num > 3f) && !(Vector3.Angle(character.data.lookDirection, allCharacter.Center - character.Center) > 60f))
             {
-                character.StartCoroutine(SlapInfo.SlapPlayerLater(character, allCharacter, 0.2f));
+                if (allCharacter.refs.view.IsMine)
+                {
+                    character.StartCoroutine(SlapInfo.SlapPlayerLater(character, allCharacter, 0.2f));
+                }
             }
         };
         foreach (Character allCharacter in Character.AllCharacters)
         {
-            if (!allCharacter.IsLocal)
-            {
-                do_stuff(allCharacter);
-            }
+            if (allCharacter.photonView.Owner.ActorNumber == character.photonView.Owner.ActorNumber) continue;
+            do_stuff(allCharacter);
         }
         foreach (Character allCharacter in Character.AllBotCharacters)
         {
