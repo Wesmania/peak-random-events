@@ -5,7 +5,6 @@ using HarmonyLib;
 using Newtonsoft.Json.Linq;
 using Photon.Pun;
 using UnityEngine;
-using Zorro.Core;
 
 namespace RandomEvents;
 
@@ -50,6 +49,15 @@ class BeeSwarmData
         if (!AllBugles.Contains(n)) return false;
         return i.isUsingPrimary;
     }
+    public static bool Speaks(Character c)
+    {
+        var m = c.GetComponent<AnimatedMouth>();
+        if (m == null)
+        {
+            return false;
+        }
+        return m.isSpeaking;
+    }
 }
 
 
@@ -88,24 +96,39 @@ public static class BeePush
 
         Vector3? pb_Vector = null;
 
+        // Check for tooting bugle.
         foreach (var c in Character.AllCharacters)
         {
-            if (!BeeSwarmData.TootsBugle(c))
-            {
-                continue;
-            }
-
             var p = c.Center;
             var q = __instance.gameObject.transform.position;
             var d = Vector3.Distance(p, q);
 
-            var ld = c.data.lookDirection.normalized;
+            if (d > 30.0f) continue;
+            if (!BeeSwarmData.TootsBugle(c)) continue;
 
+            var ld = c.data.lookDirection.normalized;
             var line_dist = Vector3.Cross(ld, q - p).magnitude;
 
-            if (d < 10.0f || (d < 30.0f && line_dist < 5.0f))
+            if (d < 10.0f || line_dist < 5.0f)
             {
                 pb_Vector = (q - p).normalized;
+                break;
+            }
+        }
+
+        // Check for speech.
+        if (!pb_Vector.HasValue)
+        {
+            foreach (var c in Character.AllCharacters)
+            {
+                var p = c.Center;
+                var q = __instance.gameObject.transform.position;
+                var d = Vector3.Distance(p, q);
+
+                if (d > 7.0f) continue;
+                if (!BeeSwarmData.Speaks(c)) continue;
+
+                pb_Vector = (q - p).normalized * 0.8f;
                 break;
             }
         }
@@ -147,7 +170,8 @@ public class BeesEvent : IEvent
     }
     public void Enable(EventInterface eintf)
     {
-        eintf.AddEnableLine(new NiceText {
+        eintf.AddEnableLine(new NiceText
+        {
             s = "Bees.",
             c = Color.yellow * 0.8f,
         });
