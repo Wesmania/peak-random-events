@@ -26,3 +26,7 @@ Release
 ## V0.1.5
 
 * Fix an event being stuck on.
+
+## V0.1.6
+
+* Two new events.
