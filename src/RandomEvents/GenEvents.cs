@@ -5,6 +5,7 @@ using System.Data.Common;
 using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Photon.Pun;
 using pworld.Scripts.Extensions;
 using Sirenix.Utilities;
 using UnityEngine;
@@ -48,6 +49,7 @@ public enum AllEvents
     PUNCH = 12,
     MEGABOOST = 13,
     NON_AMBITURNER = 14,
+    GRAB_PINGS = 15,
 };
 
 public static class BiomeConv
@@ -111,6 +113,7 @@ public interface IEvent
         { AllEvents.PUNCH, SlapEvent.factory() },
         { AllEvents.MEGABOOST, MegaboostEvent.factory() },
         { AllEvents.NON_AMBITURNER, NonAmbiturnerEvent.factory() },
+        { AllEvents.GRAB_PINGS, GrabPingsEvent.factory() },
     };
 }
 public struct EnableMessage
@@ -132,6 +135,17 @@ public class LateEventCaller : MonoBehaviour
         {
             e.LateEnable(eintf);
         }
+    }
+
+    // Piggyback some utilities.
+    public void PhotonDestroyDelayed(GameObject o, float d)
+    {
+        StartCoroutine(DoPhotonDestroyDelayed(o, d));
+    }
+    IEnumerator DoPhotonDestroyDelayed(GameObject o, float d)
+    {
+        yield return new WaitForSeconds(d);
+        PhotonNetwork.Destroy(o);
     }
 }
 
