@@ -62,6 +62,7 @@ class MegaboostRopeOnly : ItemBan
         "BounceShroom",
         "ChainShooter",
         "ClimbingSpike",
+        "CloudFungus",
         "MagicBean",
         "RescueHook",
         "RopeShooter",

@@ -51,6 +51,7 @@ public enum AllEvents
     NON_AMBITURNER = 14,
     GRAB_PINGS = 15,
     BEES = 16,
+    HEAVY_DUTY = 17,
 };
 
 public static class BiomeConv
@@ -116,6 +117,7 @@ public interface IEvent
         { AllEvents.NON_AMBITURNER, NonAmbiturnerEvent.factory() },
         { AllEvents.GRAB_PINGS, GrabPingsEvent.factory() },
         { AllEvents.BEES, BeesEvent.factory() },
+        { AllEvents.HEAVY_DUTY, HeavyDutyEvent.factory() },
     };
 }
 public struct EnableMessage
