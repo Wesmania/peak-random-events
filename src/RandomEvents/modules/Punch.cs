@@ -162,7 +162,7 @@ class SlapAction
         Action<Character> do_stuff = allCharacter =>
         {
             float num = Vector3.Distance(character.Center, allCharacter.Center);
-            if (!(num > 3f) && !(Vector3.Angle(character.data.lookDirection, allCharacter.Center - character.Center) > 60f))
+            if (!(num > 3f) && !(num < 0.1f) && !(Vector3.Angle(character.data.lookDirection, allCharacter.Center - character.Center) > 60f))
             {
                 if (allCharacter.refs.view.IsMine)
                 {
@@ -172,7 +172,6 @@ class SlapAction
         };
         foreach (Character allCharacter in Character.AllCharacters)
         {
-            if (allCharacter.photonView.Owner.ActorNumber == character.photonView.Owner.ActorNumber) continue;
             do_stuff(allCharacter);
         }
         foreach (Character allCharacter in Character.AllBotCharacters)

@@ -52,6 +52,7 @@ public enum AllEvents
     GRAB_PINGS = 15,
     BEES = 16,
     HEAVY_DUTY = 17,
+    HUGS = 18,
 };
 
 public static class BiomeConv
@@ -118,6 +119,7 @@ public interface IEvent
         { AllEvents.GRAB_PINGS, GrabPingsEvent.factory() },
         { AllEvents.BEES, BeesEvent.factory() },
         { AllEvents.HEAVY_DUTY, HeavyDutyEvent.factory() },
+        { AllEvents.HUGS, HugsEvent.factory() },
     };
 }
 public struct EnableMessage

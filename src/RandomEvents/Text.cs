@@ -168,6 +168,11 @@ public class TextSetter : MonoBehaviour
         }
     }
 
+    public void SetText(List<NiceText> start)
+    {
+        t?.PlaceText(start);
+    }
+
     public void Update()
     {
         if (Input.GetKeyDown(KeyCode.F3))

@@ -41,5 +41,5 @@ Release
 
 ## V0.1.9
 
-* New event.
+* Two new events.
 * Mitigate vanilla games becoming modded when player with mod becomes host.
