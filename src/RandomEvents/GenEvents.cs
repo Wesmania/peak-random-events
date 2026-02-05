@@ -158,6 +158,12 @@ public class PickEvents
     static int EVENT_COUNT = 2;
     List<IEvent> events = [];
     public bool is_first = true;
+
+    // Unless we calculated the first events of the run, do not calculate new ones.
+    // Fixes unintentional mod enabling when in a vanilla game a modded host takes over.
+    // FIXME: reset this value when leaving the game.
+    static bool first_event_received = false;
+
     // For testing events
     private AllEvents? OverrideEvent()
     {
@@ -165,10 +171,9 @@ public class PickEvents
     }
     public String? PickNewEvents(bool is_first, OurBiome biome)
     {
-        if (!Messages.IsMaster())
-        {
-            return null;
-        }
+        if (!Messages.IsMaster()) return null;
+        if (!is_first && !first_event_received) return null;
+
         var all_e = Enum.GetValues(typeof(AllEvents)).Cast<AllEvents>().ToList();
         var oe = OverrideEvent();
         if (oe.HasValue)
@@ -231,6 +236,12 @@ public class PickEvents
     {
         // FIXME handle errors
         EnableMessage em = JsonConvert.DeserializeObject<EnableMessage>(s)!;
+
+        if (em.is_first)
+        {
+            first_event_received = true;
+        }
+
         is_first = em.is_first;
         eintf.is_first = is_first;
         events = em.events.Select(kv => IEvent.all_events[kv.Key].FromJson(kv.Value)).ToList();
