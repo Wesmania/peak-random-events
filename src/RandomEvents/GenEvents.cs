@@ -53,6 +53,7 @@ public enum AllEvents
     BEES = 16,
     HEAVY_DUTY = 17,
     HUGS = 18,
+    PLAYER_ROPE = 19,
 };
 
 public static class BiomeConv
@@ -120,6 +121,7 @@ public interface IEvent
         { AllEvents.BEES, BeesEvent.factory() },
         { AllEvents.HEAVY_DUTY, HeavyDutyEvent.factory() },
         { AllEvents.HUGS, HugsEvent.factory() },
+        { AllEvents.PLAYER_ROPE, PlayerRopeEvent.factory() },
     };
 }
 public struct EnableMessage
@@ -187,7 +189,8 @@ public class PickEvents
         // Select all candidates first.
         var all = all_e.Select(e => (id: e, e: IEvent.all_events[e].New(biome)))
                         .Where(e => e.e.ZoneLimit().Count == 0 || e.e.ZoneLimit().Contains(biome)).ToList();
-        if (!oe.HasValue) {
+        if (!oe.HasValue)
+        {
             all.Shuffle();
         }
 
