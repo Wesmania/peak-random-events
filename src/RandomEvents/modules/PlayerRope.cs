@@ -47,6 +47,7 @@ public static class PersonalRopeMaker
         var name = AllBans.stripName(__result.name);
         if (name != "RopeAnchorForRopeShooter") return;
 
+        if (_parameters.data == null) return;
         if (_parameters.data.Length == 0) return;
         string s = (string)_parameters.data[0];
         if (s == null || s != "Random Events") return;
@@ -101,7 +102,6 @@ public static class RopeAnchorer
         joint.connectedBody = att!.GetBodypartRig(BodypartType.Torso);
     }
 }
-
 [HarmonyPatch(typeof(CharacterClimbing), "Update")]
 public static class RopeStaminaDrain
 {

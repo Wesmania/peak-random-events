@@ -68,6 +68,7 @@ public static class SuperSwarmMaker
     {
         var _parameters = parameters;
         if (_parameters.prefabName != BeeSwarmData.SwarmName) return;
+        if (_parameters.data == null) return;
         if (_parameters.data.Length == 0) return;
         string s = (string)_parameters.data[0];
         if (s == null || s != "Random Events") return;
