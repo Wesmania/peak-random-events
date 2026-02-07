@@ -21,6 +21,9 @@ public static class GlobalBehaviours
     [HarmonyPatch("Start")]
     public static void StartPostfix(GUIManager __instance)
     {
+        DoStartPostfix();
+    }
+    public static void DoStartPostfix() {
         if (coro != null) return;
         coro = new GameObject("coro_2");
         UnityEngine.Object.DontDestroyOnLoad(coro);

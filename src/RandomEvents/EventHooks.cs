@@ -1,8 +1,7 @@
 
-using System.Net.WebSockets;
 using HarmonyLib;
 using Photon.Realtime;
-using Unity.Mathematics;
+using UnityEngine;
 using Zorro.Core;
 
 namespace RandomEvents;
@@ -60,5 +59,15 @@ public static class ChangeMapPatch2
         var biome = map.segments[(int)this_seg].biome;
         var our_biome = BiomeConv.FromSegmentBiome(this_seg, biome);
         Stuff.NewEvents(false, our_biome);
+    }
+}
+
+class ShowPluginInfo
+{
+    static public void Show() {
+        SoulmateTextPatch.setter?.ShowCard([new NiceText{
+            c = Color.white,
+            s = "Random events version 0.1.10 loaded.",
+        }], 10);
     }
 }

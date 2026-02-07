@@ -141,6 +141,7 @@ public static class SoulmateTextPatch
 
         setter = coro.AddComponent<TextSetter>();
         setter.Init(t);
+        ShowPluginInfo.Show();
     }
 }
 
