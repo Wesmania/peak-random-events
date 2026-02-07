@@ -15,6 +15,7 @@ class PlayerRopeData
         enabled = true;
         var p = Character.localCharacter;
         rope = PhotonNetwork.Instantiate("RopeAnchorForRopeShooter", p.Center, Quaternion.identity, 0, [(object)"Random Events", (object)p.photonView.OwnerActorNr]);
+        rope.transform.parent = p.transform;
         var rawr = rope.GetComponent<RopeAnchorWithRope>();
         rawr.SpawnRope();
     }

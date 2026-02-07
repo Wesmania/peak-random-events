@@ -22,7 +22,8 @@ class PingGrabber
         if (!GrabPingsData.enabled) return;
         if (!PhotonNetwork.IsMasterClient) return;
 
-        GameObject go = PhotonNetwork.Instantiate(FakePitonName, point, Quaternion.LookRotation(-hitNormal, Vector3.up), 0, [(object) "Random Events"]);
+        var hn = hitNormal;
+        GameObject go = PhotonNetwork.Instantiate(FakePitonName, point + hn.normalized * 0.3f, Quaternion.LookRotation(-hitNormal, Vector3.up), 0, [(object) "Random Events"]);
         var pid = __instance.character.photonView.OwnerActorNr;
         if (FakePitons.ContainsKey(pid))
         {
