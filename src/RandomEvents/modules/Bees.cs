@@ -89,6 +89,7 @@ public static class SuperSwarmMaker
 [HarmonyPatch(typeof(BeeSwarm), "Update")]
 public static class BeePush
 {
+    private static float sum = 0.0f;
     private static void Postfix(BeeSwarm __instance)
     {
         if (!BeeSwarmData.enabled) return;
@@ -150,6 +151,22 @@ public static class BeePush
                 __instance.beesAngry = false;
                 __instance.beehiveDangerTick = 0f;
                 __instance.beesDispersalTime = 0f;
+            }
+        }
+
+        // Update speed if the player is far away.
+        sum += Time.deltaTime;
+        if (sum > 1.0f)
+        {
+            sum = 0.0f;
+            var d = (Character.localCharacter.Center - __instance.gameObject.transform.position).magnitude;
+            if (d > 50.0f)
+            {
+                __instance.movementForceAngry = 2.0f;
+            }
+            else
+            {
+                __instance.movementForceAngry = 0.65f;
             }
         }
     }

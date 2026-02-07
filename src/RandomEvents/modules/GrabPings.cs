@@ -23,7 +23,7 @@ class PingGrabber
         if (!PhotonNetwork.IsMasterClient) return;
 
         GameObject go = PhotonNetwork.Instantiate(FakePitonName, point, Quaternion.LookRotation(-hitNormal, Vector3.up), 0, [(object) "Random Events"]);
-        var pid = __instance.character.photonView.ViewID;
+        var pid = __instance.character.photonView.OwnerActorNr;
         if (FakePitons.ContainsKey(pid))
         {
             FakePitons.Remove(pid, out var OldPiton);

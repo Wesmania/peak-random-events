@@ -37,6 +37,7 @@ public static class HugsPatch
     {
         if (__instance.counter != 0f) return;
         if (!HugsData.enabled) return;
+        if (!__instance.character.IsLocal) return;
 
         var l = Character.localCharacter;
         bool is_being_hugged = Character.AllCharacters.Any(c => HugsData.IsHugging(c, l) || HugsData.IsHugging(l, c));
