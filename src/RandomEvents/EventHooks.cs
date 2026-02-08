@@ -15,7 +15,7 @@ static class Stuff
         {
             return;
         }
-        new_events = Plugin.pick_events.PickNewEvents(is_first, biome);
+        new_events = Plugin.pick_events.PickNewEvents(is_first, biome, Plugin.config!.EventCount.Value);
 
         if (new_events != null)
         {

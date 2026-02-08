@@ -159,7 +159,6 @@ public class LateEventCaller : MonoBehaviour
 
 public class PickEvents
 {
-    static int EVENT_COUNT = 2;
     List<IEvent> events = [];
     public bool is_first = true;
 
@@ -173,7 +172,7 @@ public class PickEvents
     {
         return null;
     }
-    public String? PickNewEvents(bool is_first, OurBiome biome)
+    public String? PickNewEvents(bool is_first, OurBiome biome, int event_count)
     {
         if (!Messages.IsMaster()) return null;
         if (!is_first && !first_event_received) return null;
@@ -183,7 +182,7 @@ public class PickEvents
         if (oe.HasValue)
         {
             all_e[0] = oe.Value;
-            EVENT_COUNT = 1;
+            event_count = 1;
         }
 
         // Select all candidates first.
@@ -219,7 +218,7 @@ public class PickEvents
                             return true;
                         }).ToList();
 
-        Dictionary<AllEvents, JObject> e = cands.Take(Math.Min(EVENT_COUNT, all.Count()))
+        Dictionary<AllEvents, JObject> e = cands.Take(Math.Min(event_count, all.Count()))
                                               .Select(e => (id: e.id, json: e.e.to_json()))
                                               .ToDictionary(e => e.id, e => e.json);
         EnableMessage em = new()

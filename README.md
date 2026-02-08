@@ -11,17 +11,19 @@ Adds random modifiers to each biome. For now they remain secret to not spoil the
 
 Either automatically via mod manager, or extract the mod's plugins directory to BepInEx/plugins.
 
+## Configuration
+
+Run the mod once, then edit the file in the game directory: `BepInEx/config/com.github.Wesmania.RandomEvents.cfg`.
+
 ## Usage
 
 Press F3 to see event descriptions again after they disappear.
 
 ### TODO
 
-* Test multiplayer.
 * Handle players joining/leaving more gracefully.
 
 * New effects:
   * Bring up a pawn, or suffer a curse.
   * More/fewer items. (mod integration)
-  * Scout punching.
   * Other mod integrations.

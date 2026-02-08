@@ -70,6 +70,8 @@ public partial class Plugin : BaseUnityPlugin
     public static Messages m = new(Plugin.HandleMessages);
     public static EventInterface eintf = new();
     public static PhotonCallbacks pcb = new();
+
+    public static EventsConfig? config = null;
     private void Awake()
     {
 
@@ -86,6 +88,8 @@ public partial class Plugin : BaseUnityPlugin
         PhotonNetwork.AddCallbackTarget(pcb);
 
         Log = Logger;
+
+        config ??= new EventsConfig(Config);
 
         Log.LogInfo($"Plugin {Name} is loaded!");
     }
