@@ -53,3 +53,7 @@ Release
 * Event fixes.
 * Fixes broken rope launcher.
 * Show mod version in lobby so you know it's loaded.
+
+## V0.1.12
+
+* Maybe fix broken event.
