@@ -15,7 +15,6 @@ class PlayerRopeData
         enabled = true;
         var p = Character.localCharacter;
         rope = PhotonNetwork.Instantiate("RopeAnchorForRopeShooter", p.Center, Quaternion.identity, 0, [(object)"Random Events", (object)p.photonView.OwnerActorNr]);
-        rope.transform.parent = p.transform;
         var rawr = rope.GetComponent<RopeAnchorWithRope>();
         rawr.SpawnRope();
     }
@@ -148,5 +147,20 @@ public class PlayerRopeEvent : IEvent
             New = _ => new PlayerRopeEvent(),
             FromJson = _ => new PlayerRopeEvent(),
         };
+    }
+}
+
+[HarmonyPatch(typeof(RopeSyncer), "ShouldSendData")]
+public class AlwaysSyncPersonalRope
+{
+    static public void Postfix(RopeSyncer __instance, ref bool __result)
+    {
+        if (!PlayerRopeData.enabled) return;
+        var r = __instance.rope;
+        var info = r.attachedToAnchor?.GetComponent<PlayerRopeAddedInfo>();
+        if (info == null) return;
+
+        __result = !r.creatorLeft;
+        __instance.updateVisualizerManually = false;
     }
 }
