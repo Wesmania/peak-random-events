@@ -8,36 +8,41 @@ namespace RandomEvents;
 
 // Pieces borrowed from CollisionModifier.
 
-[HarmonyPatch(typeof(Character), "OnLand")]
+[HarmonyPatch(typeof(CharacterMovement), "Land")]
 public class CharacterLandPatch
 {
     public static bool enabled = false;
     private static bool nested = false;
-    private static void Postfix(Character __instance, float sinceGrounded)
+    private static void Postfix(CharacterMovement __instance, CharacterMovement.PlayerGroundSample bestSample)
     {
         if (!enabled) return;
         if (nested) return;
+
+        var c = __instance.character;
+        if (c.data.sinceGrounded <= 0.5f) return;
+
         nested = true;
 
         float num = 5000f;
-        if ((bool)__instance.data.currentItem && __instance.data.currentItem.TryGetComponent<Parasol>(out var component) && component.isOpen)
+        if ((bool)c.data.currentItem && c.data.currentItem.TryGetComponent<Parasol>(out var component) && component.isOpen)
         {
             num = 1000f;
         }
 
-        if (__instance.data.fallSeconds > 0f || __instance.refs.afflictions.shouldPassOut)
+        if (c.data.fallSeconds > 0f || c.refs.afflictions.shouldPassOut)
         {
             num = 0f;
         }
 
-        __instance.AddStamina(0.2f);
+        c.AddStamina(0.2f);
 
-        var planeNormal = __instance.data.groundNormal;
+        var planeNormal = bestSample.normal;
         SmoothBounce b = __instance.GetComponent<SmoothBounce>() ?? __instance.gameObject.AddComponent<SmoothBounce>();
-        b.StartCoroutine(b.BounceRoutine(num, __instance, planeNormal));
+        b.StartCoroutine(b.BounceRoutine(num, c, planeNormal));
         nested = false;
     }
 }
+
 public class SmoothBounce : MonoBehaviour
 {
     public IEnumerator BounceRoutine(float knockback, Character character, Vector3 kb)
