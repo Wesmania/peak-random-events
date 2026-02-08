@@ -47,3 +47,9 @@ Release
 ## V0.1.10
 
 * New event.
+
+## V0.1.11
+
+* Event fixes.
+* Fixes broken rope launcher.
+* Show mod version in lobby so you know it's loaded.
