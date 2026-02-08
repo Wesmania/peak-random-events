@@ -160,6 +160,7 @@ public class LateEventCaller : MonoBehaviour
 public class PickEvents
 {
     List<IEvent> events = [];
+    List<AllEvents> previous_biome_events = [];
     public bool is_first = true;
 
     // Unless we calculated the first events of the run, do not calculate new ones.
@@ -191,6 +192,10 @@ public class PickEvents
         if (!oe.HasValue)
         {
             all.Shuffle();
+            // Put events from previous biome at the end of the list.
+            var prev = all.Where(e => previous_biome_events.Contains(e.id)).ToList();
+            var rest = all.Where(e => !previous_biome_events.Contains(e.id)).ToList();
+            all = [.. rest, .. prev];
         }
 
         // Now filter conflicting candidates, in order.
@@ -250,6 +255,7 @@ public class PickEvents
         eintf.is_first = is_first;
         events = em.events.Select(kv => IEvent.all_events[kv.Key].FromJson(kv.Value)).ToList();
         eintf.activeEvents = [.. em.events.Keys];
+        previous_biome_events = eintf.activeEvents;
         foreach (var ev in events)
         {
             ev.Enable(eintf);
