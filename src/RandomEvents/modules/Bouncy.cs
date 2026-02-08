@@ -50,8 +50,11 @@ public class SmoothBounce : MonoBehaviour
         float t = 0f;
         while (t < 1f)
         {
-            float num3 = knockback;
-            character.AddForce(kb * num3 * (1f - t) * Time.fixedDeltaTime);
+            if (character.data.GetTargetRagdollControll() != 0.0f)
+            {
+                float num3 = knockback;
+                character.AddForce(kb * num3 * (1f - t) * Time.fixedDeltaTime);
+            }
             character.data.sinceGrounded = Mathf.Clamp(character.data.sinceGrounded, 0f, 0.5f);
             t += Time.fixedDeltaTime;
             yield return new WaitForFixedUpdate();
