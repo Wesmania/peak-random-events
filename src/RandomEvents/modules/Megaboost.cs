@@ -106,7 +106,10 @@ public class MegaboostEvent : IEvent
     }
     public void LateEnable(EventInterface eintf)
     {
-        MegaboostData.GiveEveryoneRope();
+        if (Messages.IsMaster())
+        {
+            MegaboostData.GiveEveryoneRope();
+        }
     }
 
     public JObject to_json()

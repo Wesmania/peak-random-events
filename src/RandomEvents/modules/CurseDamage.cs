@@ -18,6 +18,12 @@ public static class Extensions
     };
     public static bool isCursable(this CharacterAfflictions.STATUSTYPE t)
     {
+        if (t == CharacterAfflictions.STATUSTYPE.Cold &&
+            DayNightManager.instance.isDay != 1.0f &&
+            Ascents.currentAscent >= 5)
+        {
+            return false;   // Ascent 5 should still have cold nights
+        }
         return !NonCursables.Contains(t);
     }
 }
@@ -100,6 +106,14 @@ public class CurseDamageEvent : IEvent
             s = "All damage is curse damage.",
             c = Color.red,
         });
+        if (Ascents.currentAscent >= 5)
+        {
+            eintf.AddEnableLine(new NiceText
+            {
+                s = "(Cold nights are exempt.)",
+                c = Color.cyan,
+            });
+        }
         SharedDamagePatch.enabled = true;
     }
 
