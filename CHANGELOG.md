@@ -57,3 +57,8 @@ Release
 ## V0.1.12
 
 * Maybe fix broken event.
+
+## V0.1.13
+
+* Rudimentary config file.
+* Fix bounce direction.

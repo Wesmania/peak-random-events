@@ -67,7 +67,7 @@ class ShowPluginInfo
     static public void Show() {
         SoulmateTextPatch.setter?.ShowCard([new NiceText{
             c = Color.white,
-            s = "Random events version 0.1.12 loaded.",
+            s = "Random events version 0.1.13 loaded.",
         }], 10);
     }
 }
